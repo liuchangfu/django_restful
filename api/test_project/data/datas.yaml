@@ -1,0 +1,17 @@
+api_user:
+  - id: 1
+    username: test001
+    email: test001@admin.com
+    groups: http://127.0.0.0:8000/group/1/
+
+  - id: 2
+    username: test002
+    email: test001@admin.com
+    groups: http://127.0.0.0:8000/group/2/
+
+
+api_group:
+  - id: 1
+    name: Developer
+  - id: 2
+    name: Tester
