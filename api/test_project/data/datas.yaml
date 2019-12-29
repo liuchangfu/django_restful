@@ -1,3 +1,9 @@
+database:
+  host: 127.0.0.1
+  username: root
+  password: root
+  name: django_restful
+
 database1: api_user
 data1:
       - id: 1
@@ -15,3 +21,4 @@ data2:
       name: Developer
     - id: 2
       name: Tester
+

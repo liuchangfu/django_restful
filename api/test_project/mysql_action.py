@@ -9,12 +9,13 @@ class DB(object):
 
     def __init__(self):
         """连接数据库"""
-        logger.info('连接数据库.......')
-        self.conn = connect(host='127.0.0.1', user='root', password='root', db='django_restful')
-        self.cursor = self.conn.cursor()
         path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'test_project', 'data', 'datas.yaml')
         with (open(path, 'r', encoding='utf8')) as f:
             self.data = yaml.load(f, Loader=yaml.FullLoader)
+            logger.info(self.data)
+        logger.info('连接数据库.......')
+        self.conn = connect(host=self.data['database']['host'], user=self.data['database']['username'], password=self.data['database']['password'], db=self.data['database']['name'])
+        self.cursor = self.conn.cursor()
 
     def run_api_uesr(self):
         self.clear(self.data['database1'])
