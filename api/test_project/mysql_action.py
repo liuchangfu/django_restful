@@ -11,51 +11,64 @@ class DB(object):
         """连接数据库"""
         logger.info('连接数据库.......')
         self.conn = connect(host='127.0.0.1', user='root', password='root', db='django_restful')
+        self.cursor = self.conn.cursor()
+        path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'test_project', 'data', 'datas.yaml')
+        with (open(path, 'r', encoding='utf8')) as f:
+            self.data = yaml.load(f, Loader=yaml.FullLoader)
+
+    def run_api_uesr(self):
+        self.clear(self.data['database1'])
+        logger.info('正在插入api_user表数据........')
+        global sql
+        for i in range(len(self.data['data1'])):
+            tabel_name = self.data['database1']
+            id = self.data['data1'][i]['id']
+            username = self.data['data1'][i]['username']
+            email = self.data['data1'][i]['email']
+            groups = self.data['data1'][i]['groups']
+            sql = f"""INSERT INTO {tabel_name}(id,username, email, `groups`) VALUES ({id}, '{username}', '{email}', '{groups}')"""
+            self.insert(sql)
+
+    def run_api_group(self):
+        self.clear(self.data['database2'])
+        logger.info('正在插入api_group表数据........')
+        global sql
+        for i in range(len(self.data['data1'])):
+            tabel_name = self.data['database2']
+            id = self.data['data2'][i]['id']
+            name = self.data['data2'][i]['name']
+            sql = f"""INSERT INTO {tabel_name}(id,name) VALUES ({id}, '{name}')"""
+            self.clear(self.data['database2'])
+            self.insert(sql)
 
     def clear(self, table_name):
         """清除表中数据"""
-        logger.info('清除数据......')
         clear_sql = 'truncate ' + table_name + ';'
-        with self.conn.cursor() as cursor:
-            cursor.execute('set foreign_key_checks=0;')
-            cursor.execute(clear_sql)
+        self.cursor.execute('set foreign_key_checks=0;')
+        self.cursor.execute(clear_sql)
         self.conn.commit()
 
-    def insert(self, table_name, table_data):
+    def insert(self, sql):
         """插入数据"""
-        logger.info('插入数据........')
 
-        for key in table_data:
-            table_data[key] = "'" + str(table_data[key]) + "'"
-            key = ','.join(table_data.keys())
-            value = ','.join(table_data.values())
-            logger.info(f'1----{key}')
-            logger.info(f'2----{value}')
-            insert_sql = 'insert into ' + table_name + "(" + key + ")" + " values" + "(" + value + ")"
-            logger.info(f"{insert_sql}")
-            with self.conn.cursor() as cursor:
-                cursor.execute(insert_sql)
-            self.conn.commit()
+
+        try:
+            # 执行sql语句
+            self.cursor.execute(sql)
+            # 提交到数据库执行
+            db.conn.commit()
+        except:
+            # 如果发生错误则回滚
+            db.conn.rollback()
 
     def close(self):
         """关闭数据库连接"""
         logger.info('关闭数据库.......')
         self.conn.close()
 
-    def init_data(self, datas):
-        """初始化数据"""
-        logger.info('初始化数据......')
-        for table, data in datas.items():
-            self.clear(table)
-            for d in data:
-                self.insert(table, d)
-            self.close()
-
 
 if __name__ == '__main__':
     db = DB()
-    path = os.path.join(os.path.dirname(__file__), 'data', 'datas.yaml')
-    with (open(path, 'r', encoding='utf8')) as f:
-        datas = yaml.load(f, Loader=yaml.FullLoader)
-    print(datas)
-    # db.init_data(datas)
+    db.run_api_group()
+    db.run_api_uesr()
+    db.close()
