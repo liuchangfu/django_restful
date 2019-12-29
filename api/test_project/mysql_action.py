@@ -50,8 +50,6 @@ class DB(object):
 
     def insert(self, sql):
         """插入数据"""
-
-
         try:
             # 执行sql语句
             self.cursor.execute(sql)
@@ -66,9 +64,13 @@ class DB(object):
         logger.info('关闭数据库.......')
         self.conn.close()
 
+    def init_data(self):
+        logger.info('正在初始化数据.........')
+        self.run_api_group()
+        self.run_api_uesr()
+        self.close()
+
 
 if __name__ == '__main__':
     db = DB()
-    db.run_api_group()
-    db.run_api_uesr()
-    db.close()
+    db.init_data()
