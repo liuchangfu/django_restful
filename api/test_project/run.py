@@ -1,11 +1,10 @@
 # _*_ coding:utf-8 _*_
 import os
 import sys
+
 curPath = os.path.abspath(os.path.dirname(__file__))
 rootPath = os.path.split(curPath)[0]
-print(rootPath)
 dir = os.path.split(rootPath)[0]
-print(dir)
 sys.path.append(os.path.split(rootPath)[0])
 import datetime
 import unittest
@@ -19,14 +18,19 @@ logger.add(log, encoding='utf-8')
 db = DB()
 db.init_data()
 
+# run.py所有的当前目录
+curdir = os.path.abspath(os.curdir)
+logger.info(curdir)
+
 # 测试用例文件夹
 # testDir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'test_project', 'testDir')
-testDir = dir + '//api' + '//test_project' + '//testDir'
+
+testDir = curdir + '//testDir'
 logger.info(testDir)
 
 # 测试报告文件夹
 # report = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'test_project', 'report/')
-report = dir + '//api' + '//test_project' + '//report'
+report = curdir + '//report'
 logger.info(report)
 
 # 加载测试用例
