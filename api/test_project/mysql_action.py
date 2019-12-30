@@ -14,7 +14,8 @@ class DB(object):
             self.data = yaml.load(f, Loader=yaml.FullLoader)
             logger.info(self.data)
         logger.info('连接数据库.......')
-        self.conn = connect(host=self.data['database']['host'], user=self.data['database']['username'], password=self.data['database']['password'], db=self.data['database']['name'])
+        self.conn = connect(host=self.data['database']['host'], user=self.data['database']['username'],
+                            password=self.data['database']['password'], db=self.data['database']['name'])
         self.cursor = self.conn.cursor()
 
     def run_api_uesr(self):
@@ -39,7 +40,6 @@ class DB(object):
             id = self.data['data2'][i]['id']
             name = self.data['data2'][i]['name']
             sql = f"""INSERT INTO {tabel_name}(id,name) VALUES ({id}, '{name}')"""
-            self.clear(self.data['database2'])
             self.insert(sql)
 
     def clear(self, table_name):
