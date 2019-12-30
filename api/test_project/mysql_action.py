@@ -28,7 +28,7 @@ class DB(object):
             username = self.data['data1'][i]['username']
             email = self.data['data1'][i]['email']
             groups = self.data['data1'][i]['groups']
-            sql = f"""INSERT INTO {tabel_name}(id,username, email, `groups`) VALUES ({id}, '{username}', '{email}', '{groups}')"""
+            sql = f"INSERT INTO {tabel_name}(id,username, email, `groups`) VALUES ({id}, '{username}', '{email}', '{groups}')"
             self.insert(sql)
 
     def run_api_group(self):
@@ -39,7 +39,7 @@ class DB(object):
             tabel_name = self.data['database2']
             id = self.data['data2'][i]['id']
             name = self.data['data2'][i]['name']
-            sql = f"""INSERT INTO {tabel_name}(id,name) VALUES ({id}, '{name}')"""
+            sql = f"INSERT INTO {tabel_name}(id,name) VALUES ({id}, '{name}')"
             self.insert(sql)
 
     def clear(self, table_name):
