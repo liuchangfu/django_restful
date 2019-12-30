@@ -22,7 +22,7 @@ for i in range(len(datas['data1'])):
     usrname = datas['data1'][i]['username']
     email = datas['data1'][i]['email']
     groups = datas['data1'][i]['groups']
-    sql = f"""INSERT INTO {tabel_name}(id,username, email, groups) VALUES ('{id}', '{usrname}', '{email}', '{groups}')"""
+    sql = f"""INSERT INTO {tabel_name}(id,username, email, `groups`) VALUES ('{id}', '{usrname}', '{email}', '{groups}')"""
     print(sql)
 
 for i in range(len(datas['data1'])):
@@ -32,12 +32,4 @@ for i in range(len(datas['data1'])):
     sql = f"""INSERT INTO {tabel_name}(id,name) VALUES ('{id}', '{name}')"""
     print(sql)
 
-# print(datas['data1'][1]['id'])
-# print(datas['data1'][1]['username'])
-# print(datas['data1'][1]['email'])
-# print(datas['data1'][1]['groups'])
 
-# print(datas['database2'])
-# print(datas['data2'])
-# print(datas['data2'][0])
-# print(datas['data2'][1])

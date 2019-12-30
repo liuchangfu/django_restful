@@ -18,7 +18,8 @@ class DB(object):
                             password=self.data['database']['password'], db=self.data['database']['name'])
         self.cursor = self.conn.cursor()
 
-    def run_api_uesr(self):
+    def run_api_user(self):
+        logger.info(f"正在清除{self.data['database1']}表中的数据.....")
         self.clear(self.data['database1'])
         logger.info('正在插入api_user表数据........')
         global sql
@@ -29,9 +30,11 @@ class DB(object):
             email = self.data['data1'][i]['email']
             groups = self.data['data1'][i]['groups']
             sql = f"""INSERT INTO {tabel_name}(id,username, email, `groups`) VALUES ({id}, '{username}', '{email}', '{groups}')"""
+            logger.info(sql)
             self.insert(sql)
 
     def run_api_group(self):
+        logger.info(f"正在清除{self.data['database2']}表中的数据.....")
         self.clear(self.data['database2'])
         logger.info('正在插入api_group表数据........')
         global sql
@@ -40,6 +43,7 @@ class DB(object):
             id = self.data['data2'][i]['id']
             name = self.data['data2'][i]['name']
             sql = f"""INSERT INTO {tabel_name}(id,name) VALUES ({id}, '{name}')"""
+            logger.info(sql)
             self.insert(sql)
 
     def clear(self, table_name):
@@ -55,10 +59,10 @@ class DB(object):
             # 执行sql语句
             self.cursor.execute(sql)
             # 提交到数据库执行
-            db.conn.commit()
+            self.conn.commit()
         except:
             # 如果发生错误则回滚
-            db.conn.rollback()
+            self.conn.rollback()
 
     def close(self):
         """关闭数据库连接"""
@@ -68,7 +72,7 @@ class DB(object):
     def init_data(self):
         logger.info('正在初始化数据.........')
         self.run_api_group()
-        self.run_api_uesr()
+        self.run_api_user()
         self.close()
 
 
