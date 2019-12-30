@@ -34,7 +34,7 @@ class UserTest(unittest.TestCase):
         self.assertEqual(r.status_code, 204)
 
     def test_004_update_user(self):
-        logger.info('test_004_updata_user')
+        logger.info('test_004_update_user')
         data = {'email': '110@admin.com'}
         r = requests.patch(self.base_url + '2/', data=data, auth=self.auth)
         result = r.json()
@@ -67,7 +67,7 @@ class GroupTest(unittest.TestCase):
         self.assertEqual(result['name'], 'Boss')
 
     def test_004_update_group(self):
-        logger.info('test_004_updata_group')
+        logger.info('test_004_update_group')
         data = {'name': 'Pm'}
         r = requests.patch(self.base_url + '2/', data=data, auth=self.auth)
         result = r.json()
