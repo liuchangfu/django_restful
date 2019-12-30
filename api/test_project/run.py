@@ -1,15 +1,15 @@
 # _*_ coding:utf-8 _*_
-import datetime
 import os
 import sys
+dir = os.path.join(os.path.dirname(os.path.dirname(__file__)))
+sys.path.append(dir)
+print(dir)
+print(sys.path)
+import datetime
 import unittest
 from loguru import logger
 from api.test_project.BSTestRunner import BSTestRunner
 from api.test_project.mysql_action import DB
-dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'api')
-sys.path.append(dir)
-print(dir)
-print(sys.path)
 
 log = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'test_project', 'log', 'run.txt')
 logger.add(log, encoding='utf-8')
